@@ -6,7 +6,7 @@ export const useAuthStore = create((set, get) => ({
   user: null,
   login: async () => {
     try {
-      window.location.href = import.meta.env.MODE === "development" ? "http://localhost:5000/api/auth/login" : "/api/auth/login";
+      window.location.href = import.meta.env.MODE === "development" ? "http://localhost:5000/api/auth/login" : "https://bulk-mailer-0vsb.onrender.com/api/auth/login";
     } catch (e) {
       console.log(e);
     }
