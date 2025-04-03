@@ -4,6 +4,8 @@ import nodemailer from "nodemailer"
 export const getTransporter = async(userEmail, accessToken, refreshToken)=>{
     const transporter = nodemailer.createTransport({
         service: "gmail",
+        port: 587,
+        secure: true,
         auth: {
             type: "OAuth2",
             user: userEmail,
@@ -28,6 +30,8 @@ export const sendMail = async(loggedInEmail, accessToken, refreshToken, recipien
         subject: subject,
         html: message
     }
+
+    console.log(recipients, subject);
 
     try{
 
