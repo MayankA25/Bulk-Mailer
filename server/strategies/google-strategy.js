@@ -11,7 +11,7 @@ dotenv.config({ path: "D:\\Mayank Data\\CODING\\MERN Projects\\Bulk Mailer\\serv
 export default passport.use(new Strategy({
     clientID: process.env.OAUTH_CLIENT_ID,
     clientSecret: process.env.OAUTH_CLIENT_SECRET,
-    callbackURL: process.env.NODE_ENV === "development" ? "http://localhost:5000/api/auth/callback" : "/api/auth/callback",
+    callbackURL: process.env.NODE_ENV === "development" ? "http://localhost:5000/api/auth/callback" : "https://bulk-mailer-0vsb.onrender.com/api/auth/callback",
     scope: ["profile",
       "email",
       "https://mail.google.com/"],
