@@ -21,7 +21,7 @@ authRouter.get(
     approval_prompt: "force",
   })
 );
-authRouter.get("/callback", passport.authenticate("google", {failureRedirect: "http://localhost:5173"}), callback);
+authRouter.get("/callback", passport.authenticate("google", {failureRedirect: process.env.NODE_ENV === "development" ? "http://localhost:5173" : "/"}), callback);
 
 authRouter.get("/getuser",getUser)
 

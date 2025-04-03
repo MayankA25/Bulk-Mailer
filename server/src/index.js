@@ -63,7 +63,7 @@ app.use("/api/mail", mailRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "..", "client", "dist")));
-  app.use("*", (req, res) => {
+  app.use("*name", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
   });
 }
