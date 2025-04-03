@@ -6,7 +6,7 @@ export const useAuthStore = create((set, get) => ({
   user: null,
   login: async () => {
     try {
-      window.location.href = "http://localhost:5000/api/auth/login";
+      window.location.href = import.meta.env.MODE === "development" ? "http://localhost:5000/api/auth/login" : "/api/auth/login";
     } catch (e) {
       console.log(e);
     }
@@ -33,7 +33,7 @@ export const useAuthStore = create((set, get) => ({
       const response = await axiosInstance.post("/auth/logout");
       // console.log(response);
       localStorage.removeItem("showLoader");
-      window.location.href = "http://localhost:5173";
+      window.location.href = import.meta.env === "devlopment" ? "http://localhost:5173": "/";
     } catch (e) {
       console.log(e);
     }

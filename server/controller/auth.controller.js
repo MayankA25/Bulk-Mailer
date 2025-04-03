@@ -1,7 +1,7 @@
 export const callback = (req, res)=>{
     console.log(req.session)
     // return res.status(200).json({ msg: "Logged In Successfully", login: true })
-    return res.redirect("http://localhost:5173/sendmail")
+    return res.redirect(process.env.NODE_ENV === "development" ? "http://localhost:5173/sendmail" : "/sendmail")
 }
 
 export const getUser = (req, res)=>{
