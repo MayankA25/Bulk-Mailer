@@ -62,9 +62,9 @@ app.use("/api/auth", authRouter)
 app.use("/api/mail", mailRouter)
 
 if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname, "../client", "/dist")));
+    app.use(express.static(path.join(__dirname, "../client", "dist")));
     app.use("*", (req, res)=>{
-        res.sendFile(path.join(__dirname, "../client", "/dist", "/index.html"))
+        res.sendFile(path.join(__dirname, "../client", "/dist", "index.html"))
     })
 }
 
