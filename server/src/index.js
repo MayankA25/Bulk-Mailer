@@ -59,14 +59,6 @@ app.use(passport.session());
 const PORT = process.env.PORT;
 
 app.use("/api/auth", authRouter);
-
-// app.use(checkLogin)
-
-// app.use("/", (req, res)=>{
-//     console.log(req.session)
-//     return res.status(200).json({ msg: "Hello World!" })
-// })
-
 app.use("/api/mail", mailRouter);
 
 if (process.env.NODE_ENV === "production") {
