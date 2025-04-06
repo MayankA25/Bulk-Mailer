@@ -1,9 +1,12 @@
 import IORedis from "ioredis"
+import dotenv from "dotenv"
+
+dotenv.config({ path:"D:\\Mayank Data\\CODING\\MERN Projects\\Bulk Mailer\\server\\.env" })
 
 let redis;
 
 if(!redis){
-    redis = new IORedis("redis://default:s7undwoSojk5Sih5owRGLhRv9ArvCCvL@redis-12648.crce179.ap-south-1-1.ec2.redns.redis-cloud.com:12648", {
+    redis = new IORedis(process.env.REDIS_URL, {
         maxRetriesPerRequest: null
     })
 }
