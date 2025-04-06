@@ -4,8 +4,8 @@ import nodemailer from "nodemailer"
 export const getTransporter = async(userEmail, accessToken, refreshToken)=>{
     const transporter = nodemailer.createTransport({
         service: "gmail",
-        port: 587,
-        secure: true,
+        port: 587, // was not able to send mail to organization before without this port
+        secure: true, // without this also.
         auth: {
             type: "OAuth2",
             user: userEmail,
@@ -13,25 +13,28 @@ export const getTransporter = async(userEmail, accessToken, refreshToken)=>{
             clientSecret: process.env.OAUTH_CLIENT_SECRET,
             accessToken: accessToken,
             refreshToken: refreshToken
-        }
+        },
+        pool: true,
+        maxConnections: 5,
+        rateLimit: 5
     });
 
     return transporter
 };
 
 
-export const sendMail = async(loggedInEmail, accessToken, refreshToken, recipients, subject, message)=>{
+export const sendMail = async(loggedInEmail, accessToken, refreshToken, recipient, subject, message)=>{
     const transporter = await getTransporter(loggedInEmail, accessToken, refreshToken);
-    console.log(loggedInEmail, accessToken, recipients, subject, message)
-    console.log(recipients.join(","))
+    console.log(loggedInEmail, accessToken, recipient, subject, message)
+    // console.log(recipients.join(","))
     let mailOptions = {
         from: loggedInEmail,
-        to: recipients.join(","),
+        to: recipient,
         subject: subject,
         html: message
     }
 
-    console.log(recipients, subject);
+    console.log("Email Sent To: ", recipient);
 
     try{
 
