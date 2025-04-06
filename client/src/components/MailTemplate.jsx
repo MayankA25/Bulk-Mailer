@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "@monaco-editor/react";
 import { useEmailStore } from "../store/useEmailStore";
 import toast from "react-hot-toast";
@@ -19,12 +19,11 @@ const MailTemplate = () => {
     if (language === "html") {
       // console.log("Inside html")
       console.log(newValue);
-      ref.current.innerHTML = newValue;
+      text ? ref.current.innerHTML = newValue: null;
     } else {
-      ref.current.innerText = newValue;
+      text ? ref.current.innerText = newValue: null;
     }
   };
-
   const handleFileUpload = (event)=>{
     const file = event.target.files[0];
 
@@ -62,7 +61,7 @@ const MailTemplate = () => {
           <div className="flex gap-4">
             <h2 className="font-bold">Subject: </h2>
             <input
-              className="border-neutral"
+              className="input input-primary"
               placeholder="Enter Subject"
               type="text"
               size={100}
@@ -74,7 +73,7 @@ const MailTemplate = () => {
             <h2 className="font-bold">To: </h2>
             <textarea
               ref={ref2}
-              className="w-full"
+              className="w-full textarea textarea-primary"
               placeholder="Enter Recipents"
               type="text"
               value={recipients}
@@ -83,22 +82,24 @@ const MailTemplate = () => {
           </div>
           <div className="flex flex-col gap-2">
             <h2 className="font-bold text-base-content">Upload Excel File:</h2>
-            <input className="btn" type="file" onChange={(e)=>{const readRecipients = handleFileUpload(e); }} />
+            <input className="file-input file-input-primary" type="file" onChange={(e)=>{const readRecipients = handleFileUpload(e); }} />
           </div>
         </div>
-        <div className="flex w-full rounded gap-3">
-          <div className="flex bg-base-300 w-[50%] rounded-lg p-3 text-base-content flex-col gap-2">
+        <div className="flex flex-col w-full rounded gap-3">
+          <div className="flex bg-base-300 w-[100%] rounded-lg p-3 text-base-content flex-col gap-2">
             <h2 className="font-bold">Body:</h2>
+            <h2 className="font-bold text-accent" >*If Copy Pasting Text, Dont Forget To Format Document To See The Preview*</h2>
             {/* <textarea placeholder='Enter Email Body Here' rows={20} value={text} onChange={(e)=>setText(e.target.value)}></textarea> */}
             <select
-              onChange={(e) => setLanguage(e.target.value)}
+              onChange={(e) => {setLanguage(e.target.value);}}
               value={language}
+              className="menu dropdown-content bg-base-100 rounded-box z-1 w-full p-2 shadow-sm"
             >
-              <option className="text-black" value="plaintext">
+              <option className="text-base-content" value="plaintext">
                 Plain Text
               </option>
-              <option className="text-black" value="html">
-                HTML - Use TailwindCSS Classes
+              <option className="text-base-content" value="html">
+                HTML - Use Inline CSS
               </option>
             </select>
             <Editor
@@ -114,24 +115,50 @@ const MailTemplate = () => {
               options={{ wordWrap: "on", autoClosingTags: language === "html" }}
             ></Editor>
           </div>
-          <div className="flex bg-base-300 w-[50%] rounded-lg p-3 text-base-content flex-col gap-2">
+          {text && <div className="flex bg-base-300 w-[100%] rounded-lg p-3 text-base-content flex-col gap-2">
             <h2 className="font-bold text-center border-b-2">Body Preview</h2>
             <div
               ref={ref}
               className="h-full preview my-3 overflow-auto px-3"
             ></div>
-          </div>
+          </div>}
         </div>
       </div>
       <div className="flex">
         <button
           className="btn bg-primary font-bold border-none rounded-md"
           onClick={() => {
-            toast.promise(sendMail(recipients.split(" "), subject, text), {
-              loading: "Sending Mail...",
-              success: "Mail Sent Successfully",
-              error: "Error While Sending Mail",
-            });
+            let val = true;
+            let email = true
+            if(!recipients) return toast.error("Provide at least one recipient or upload an excel file with 'Email' field")
+            if(!text) return toast.error("Provide The Email Body");
+
+            for(let recipient of recipients.split(" ")){
+              console.log(recipient)
+              if(!recipient.includes("@") || !recipient.includes(".com")){
+                email = false
+              }
+            }
+            if(!email) return toast.error("Provide valid recipients")
+
+            if(!subject){
+              let value = confirm("Are you sure you want to send mails to the recipients without subject?");
+
+              if(value === false){
+                val = false
+              }
+            
+            } 
+            
+            
+            if(val && email){
+
+              toast.promise(sendMail(recipients.split(" "), subject, text), {
+                loading: "Sending Mail...",
+                success: "Mail Sent Successfully",
+                error: "Error While Sending Mail",
+              });
+            }
           }}
         >
           Send Mail

@@ -1,38 +1,35 @@
-import { LayoutTemplate, Mail, UserRound, Zap } from "lucide-react";
+import { Cloud, LayoutTemplate, Mail, Rows4, UserRound, Zap } from "lucide-react";
 import React from "react";
 
 const Grid = () => {
   const texts = [
     "Bulk Email Sending",
-    "Custom Templates",
+    "Queue Email System",
     "Personalization",
-    "Fast Emailing",
+    "Redis Cloud",
   ];
   const info = [
     "Send Mails Concurrently",
-    "Design Professional Emails",
+    "Emails in Queue",
     "Recipents By Email",
-    "Faster Communication",
+    "Do Not Skip A Mail",
   ];
 
-  const icons = [<Mail/>, <LayoutTemplate/>, <UserRound/>, <Zap/>]
+  const icons = [<Mail />, <Rows4 />, <UserRound />, <Cloud />];
 
   return (
     <div className="flex-col flex gap-3">
-      <h2 className="font-bold">Key Features</h2>
-      <div className="grid grid-cols-2 gap-4">
-        {[...Array(4)].map((_, index) => {
+      <h2 className="font-bold text-xl">Key Features</h2>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        {[...Array(4)].map((element, index) => {
           return (
-            <div
-              key={index}
-              className="flex gap-4 bg-base-300/70 p-4 rounded-lg"
-            >
-              <div className="flex bg-primary w-12 h-12 justify-center items-center rounded-full">
-                {icons[index]}
+            <div className="flex bg-base-300 p-4 gap-4 rounded-lg items-center">
+              <div className="flex justify-center items-center bg-primary rounded-full p-4 w-12 h-12">
+                <i>{icons[index]}</i>
               </div>
-              <div className="flex flex-col gap-1">
-                <h2 className="font-bold">{texts[index]}</h2>
-                <h4>{info[index]}</h4>
+              <div className="flex flex-col">
+                <h2 className="font-bold text-lg ">{texts[index]}</h2>
+                <h2 className="font-semibold text-lg text-base-content">{info[index]}</h2>
               </div>
             </div>
           );

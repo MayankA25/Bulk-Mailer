@@ -7,7 +7,4 @@ if(!redis){
         maxRetriesPerRequest: null
     })
 }
-
-
-
 export const connection = redis;

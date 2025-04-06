@@ -8,10 +8,10 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate()
   return (
-    <div className="w-full bg-base-300 p-3.5">
+    <div className="w-full bg-base-300 p-3.5 sticky top-0">
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center">
-          <h2 onClick={()=>navigate("/")} className="font-bold hover:cursor-pointer">
+          <h2 onClick={()=>navigate("/")} className="font-bold hover:cursor-pointer text-xl">
             Bulk Mailer
           </h2>
         </div>

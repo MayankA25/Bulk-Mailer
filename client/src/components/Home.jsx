@@ -8,12 +8,12 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center py-4">
-      <div className="flex flex-col w-[50vw] gap-7">
+      <div className="flex flex-col w-[70vw] gap-7">
         <div className="flex flex-col gap-5 items-left">
-          <h2 className="font-bold text-[2vw]">
+          <h2 className="font-bold text-3xl">
             Reach Your Audience In Seconds
           </h2>
-          <h3 className="text-[1vw] font-semibold">
+          <h3 className="font-semibold text-xl">
             Effortlessly send emails to multiple recipients with just a few
             clicks. Our powerful and user-friendly app helps you streamline
             communication, save time, and boost productivity. Whether it's
@@ -21,7 +21,7 @@ const Home = () => {
             your messages reach the right audience efficiently.
           </h3>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <button className="btn bg-primary rounded-md" onClick={()=>user ? navigate("/sendmail"): document.getElementById("google-btn").click()} >{user ? "Send Email": "Sign In To Continue"}</button>
           <button className="btn bg-primary/40 rounded-md">Learn More</button>
         </div>
